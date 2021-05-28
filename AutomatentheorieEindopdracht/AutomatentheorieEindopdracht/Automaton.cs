@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace AutomatentheorieEindopdracht
 {
-    abstract class Automaton <T> : IComparable<Transition<T>> where T : IComparable
+    class Automaton <T> : IComparable<Transition<T>> where T : IComparable
     {
-        private HashSet<Transition<T>> transitions;
+        public HashSet<Transition<T>> transitions { get; set; }
         
-        private List<T> states;
-        private List<T> startStates;
-        private List<T> finalStates;
-        private List<char> alphabet;
+        public List<T> states { get; set; }
+        public List<T> startStates { get; set; }
+        public List<T> finalStates { get; set; }
+        public List<char> alphabet { get; set; }
 
         //Constructor Automaton
-        public Automaton()
-        {
 
-        }
         public Automaton(List<char> alphabet)
         {
             this.transitions = new HashSet<Transition<T>>();

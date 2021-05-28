@@ -31,7 +31,9 @@ namespace AutomatentheorieEindopdracht
             automaton.defineAsStartState("q0");
             automaton.defineAsFinalState("q3");
 
-            Console.WriteLine("SUCCES!!!!!!!!!");
+            automaton.accept("ab");
+
+            Console.WriteLine("End Lesson 1a");
         }
 
     }

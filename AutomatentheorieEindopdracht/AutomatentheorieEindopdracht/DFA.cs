@@ -17,10 +17,10 @@ namespace AutomatentheorieEindopdracht
 
         public DFA(List<char> alphabet) : base(alphabet)
         {
-            this.transitions = new HashSet<Transition<T>>();
-            this.states = new List<T>();
-            this.startStates = new List<T>();
-            this.finalStates = new List<T>();
+            this.transitions = base.transitions;
+            this.states = base.states;
+            this.startStates = base.startStates;
+            this.finalStates = base.finalStates;
             this.alphabet = alphabet;
         }
 
@@ -37,6 +37,13 @@ namespace AutomatentheorieEindopdracht
         public override void defineAsFinalState(T t)
         {
             base.defineAsFinalState(t);
+        }
+
+        //Checks if input string is accepted in DFA
+        public bool accept(String s)
+        {
+            Console.WriteLine(this.transitions.Count);
+            return true;
         }
 
     }
