@@ -10,19 +10,19 @@ namespace AutomatentheorieEindopdracht
     {
         public HashSet<Transition<T>> transitions { get; set; }
         
-        public List<T> states { get; set; }
-        public List<T> startStates { get; set; }
-        public List<T> finalStates { get; set; }
-        public List<char> alphabet { get; set; }
+        public SortedSet<T> states { get; set; }
+        public SortedSet<T> startStates { get; set; }
+        public SortedSet<T> finalStates { get; set; }
+        public SortedSet<char> alphabet { get; set; }
 
         //Constructor Automaton
 
-        public Automaton(List<char> alphabet)
+        public Automaton(SortedSet<char> alphabet)
         {
             this.transitions = new HashSet<Transition<T>>();
-            this.states = new List<T>();
-            this.startStates = new List<T>();
-            this.finalStates = new List<T>();
+            this.states = new SortedSet<T>();
+            this.startStates = new SortedSet<T>();
+            this.finalStates = new SortedSet<T>();
             this.alphabet = alphabet;
         }
         #region Automaton methods

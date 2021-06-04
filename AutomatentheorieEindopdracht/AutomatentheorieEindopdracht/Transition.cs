@@ -45,5 +45,10 @@ namespace AutomatentheorieEindopdracht
 
             return (fromCompare != 0 ? fromCompare : (symbolCompare != 0 ? symbolCompare : toCompare));
         }
+
+        public String toString()
+        {
+            return "(" + this.fromState + ", " + this.symbol + ")" + "-->" + this.toState;
+        }
     }
 }

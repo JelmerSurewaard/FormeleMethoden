@@ -12,8 +12,9 @@ namespace AutomatentheorieEindopdracht
 
         public void Lesson1a()
         {
-            List<char> list = new List<char>();
-            list.AddRange("ab");
+            SortedSet<char> list = new SortedSet<char>();
+            list.Add('a');
+            list.Add('b');
             DFA<string> automaton = new DFA<string>(list);
 
             automaton.addTransition(new Transition<string>("q0", 'a', "q1"));
@@ -31,7 +32,8 @@ namespace AutomatentheorieEindopdracht
             automaton.defineAsStartState("q0");
             automaton.defineAsFinalState("q3");
 
-            automaton.accept("ab");
+            Console.WriteLine(automaton.accept("baab"));
+            
 
             Console.WriteLine("End Lesson 1a");
         }
