@@ -17,14 +17,26 @@ namespace AutomatentheorieEindopdracht
 
         //Constructor Automaton
 
-        public Automaton(SortedSet<char> alphabet)
+        public Automaton(int n)
         {
             this.transitions = new HashSet<Transition<T>>();
             this.states = new SortedSet<T>();
             this.startStates = new SortedSet<T>();
             this.finalStates = new SortedSet<T>();
-            this.alphabet = alphabet;
+            this.alphabet = new SortedSet<char>();
+            fillAlphabet(n);
         }
+
+        protected void fillAlphabet(int n)
+        {
+            string stockAlphabet = "abcdefghijklmnopqrstuvwxyz";
+
+            for (int i = 0; i < n; i++)
+            {
+                this.alphabet.Add(stockAlphabet.ElementAt(i));
+            }
+        }
+
         #region Automaton methods
         
         public virtual void addTransition(Transition<T> t)

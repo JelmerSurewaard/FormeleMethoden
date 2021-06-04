@@ -13,13 +13,19 @@ namespace AutomatentheorieEindopdracht
         private SortedSet<T> finalStates;
         private SortedSet<char> alphabet;
 
-        public DFA(SortedSet<char> alphabet) : base(alphabet)
+        public DFA(int n) : base(n)
         {
             this.transitions = base.transitions;
             this.states = base.states;
             this.startStates = base.startStates;
             this.finalStates = base.finalStates;
-            this.alphabet = alphabet;
+            this.alphabet = new SortedSet<char>();
+            fillAlphabet(n);
+        }
+
+        private void fillAlphabet(int n)
+        {
+            base.fillAlphabet(n);
         }
 
         public override void addTransition(Transition<T> t)

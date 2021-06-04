@@ -12,10 +12,7 @@ namespace AutomatentheorieEindopdracht
 
         public void Lesson1a()
         {
-            SortedSet<char> list = new SortedSet<char>();
-            list.Add('a');
-            list.Add('b');
-            DFA<string> automaton = new DFA<string>(list);
+            DFA<string> automaton = new DFA<string>(2);
 
             automaton.addTransition(new Transition<string>("q0", 'a', "q1"));
             automaton.addTransition(new Transition<string>("q0", 'b'));
@@ -34,17 +31,14 @@ namespace AutomatentheorieEindopdracht
 
             automaton.printTransitions();
 
-            Console.WriteLine(automaton.accept("baab"));
+            Console.WriteLine(automaton.accept("bbbb"));
             
             Console.WriteLine("End Lesson 1a");
         }
 
         public void Lesson1b()
         {
-            SortedSet<char> list = new SortedSet<char>();
-            list.Add('a');
-            list.Add('b');
-            NDFA<string> automaton = new NDFA<string>(list);
+            NDFA<string> automaton = new NDFA<string>(2);
 
             automaton.addTransition(new Transition<string>("q0", 'a', "q1"));
             automaton.addTransition(new Transition<string>("q0", 'a'));
@@ -65,7 +59,7 @@ namespace AutomatentheorieEindopdracht
 
             automaton.printTransitions();
 
-            Console.WriteLine(automaton.accept("abab"));
+            Console.WriteLine(automaton.accept("bbbb"));
 
             Console.WriteLine("End Lesson 1b");
         }
