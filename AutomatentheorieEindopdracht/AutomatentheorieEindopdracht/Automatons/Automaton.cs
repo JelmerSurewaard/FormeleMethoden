@@ -36,7 +36,7 @@ namespace AutomatentheorieEindopdracht
 
         public virtual void defineAsStartState(T t)
         {
-            // If already in states no problem because a HashSet will remove duplicates.
+            // If already in states no problem because a SortedSet will remove duplicates.
             states.Add(t);
             startStates.Add(t);
         }
@@ -52,6 +52,29 @@ namespace AutomatentheorieEindopdracht
         public int CompareTo(Transition<T> other)
         {
             throw new NotImplementedException();
+        }
+
+        protected List<T> getNextStates(List<T> states, char c)
+        {
+            List<T> nextStates = states;
+            T lastState = nextStates.Last();
+
+            foreach (Transition<T> transition in transitions)
+            {
+                if (transition.fromState.Equals(lastState) && transition.symbol.Equals(c))
+                {
+                    nextStates.Add(transition.toState);
+                }
+            }
+
+            return nextStates;
+        }
+        public void printTransitions()
+        {
+            foreach (Transition<T> transition in this.transitions)
+            {
+                Console.WriteLine(transition.toString());
+            }
         }
     }
 }

@@ -43,9 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Automaton.cs" />
-    <Compile Include="DFA.cs" />
+    <Compile Include="Automatons\Automaton.cs" />
+    <Compile Include="Automatons\DFA.cs" />
     <Compile Include="Lesson1.cs" />
+    <Compile Include="Automatons\NDFA.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transition.cs" />

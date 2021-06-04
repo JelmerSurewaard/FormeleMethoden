@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutomatentheorieEindopdracht
 {
-    class DFA<T> : Automaton<T> where T : IComparable
+    class NDFA<T> : Automaton<T> where T : IComparable
     {
         private HashSet<Transition<T>> transitions;
 
@@ -15,7 +15,7 @@ namespace AutomatentheorieEindopdracht
         private SortedSet<T> finalStates;
         private SortedSet<char> alphabet;
 
-        public DFA(SortedSet<char> alphabet) : base(alphabet)
+        public NDFA(SortedSet<char> alphabet) : base(alphabet)
         {
             this.transitions = base.transitions;
             this.states = base.states;
@@ -31,15 +31,7 @@ namespace AutomatentheorieEindopdracht
 
         public override void defineAsStartState(T t)
         {
-            states.Add(t);
-            if (startStates.Count == 0)
-            {
-                startStates.Add(t);
-            }
-            else
-            {
-                Console.WriteLine("Cannot define [" + t.ToString() + "] as startState, as a starting state is already defined.");
-            }
+            base.defineAsStartState(t);
         }
 
         public override void defineAsFinalState(T t)
@@ -50,7 +42,7 @@ namespace AutomatentheorieEindopdracht
         //Checks if input string is accepted in DFA
         public bool accept(String s)
         {
-            Console.WriteLine("Next string going though the accept() method for DFA: " + s);
+            Console.WriteLine("Next string going though the accept() method for NDFA: " + s);
 
             //checks if input string contains values from alphabet
             foreach (char c in s)
@@ -60,43 +52,32 @@ namespace AutomatentheorieEindopdracht
 
             // Creates a list of states starting with the startState
             List<T> iterationList = new List<T>();
-            iterationList.Add(startStates.First());
 
-            for (int i = 0; i < s.Length; i++)
+            for (int i = 0; i < startStates.Count; i++)
             {
-                iterationList = getNextStates(iterationList, s[i]);
-            }
+                iterationList.Add(startStates.ElementAt(i));
 
-            if (finalStates.Contains(iterationList.Last()))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private List<T> getNextStates(List<T> states, char c)
-        {
-            List<T> nextStates = states;
-            T lastState = nextStates.Last();
-
-            foreach (Transition<T> transition in transitions)
-            {
-                if (transition.fromState.Equals(lastState) && transition.symbol.Equals(c))
+                for (int j = 0; j < s.Length; j++)
                 {
-                    nextStates.Add(transition.toState);
+                    iterationList = getNextStates(iterationList, s[j]);
+                }
+
+                if (finalStates.Contains(iterationList.Last()))
+                {
+                    return true;
                 }
             }
-
-            return nextStates;
+            
+            return false;
         }
-
-        public void printTransitions()
+        private new List<T> getNextStates(List<T> states, char c)
         {
-            foreach (Transition<T> transition in this.transitions)
-            {
-                Console.WriteLine(transition.toString());
-            }
+            return base.getNextStates(states, c);
         }
 
+        public new void printTransitions()
+        {
+            base.printTransitions();
+        }
     }
 }
