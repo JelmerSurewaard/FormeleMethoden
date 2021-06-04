@@ -32,6 +32,8 @@ namespace AutomatentheorieEindopdracht
             automaton.defineAsStartState("q0");
             automaton.defineAsFinalState("q3");
 
+            automaton.printTransitions();
+
             Console.WriteLine(automaton.accept("baab"));
             
 

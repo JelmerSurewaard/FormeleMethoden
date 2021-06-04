@@ -31,7 +31,15 @@ namespace AutomatentheorieEindopdracht
 
         public override void defineAsStartState(T t)
         {
-            base.defineAsStartState(t);
+            states.Add(t);
+            if (startStates.Count == 0)
+            {
+                startStates.Add(t);
+            }
+            else
+            {
+                Console.WriteLine("Cannot define [" + t.ToString() + "] as startState, as a starting state is already defined.");
+            }
         }
 
         public override void defineAsFinalState(T t)
@@ -42,11 +50,6 @@ namespace AutomatentheorieEindopdracht
         //Checks if input string is accepted in DFA
         public bool accept(String s)
         {
-            foreach (Transition<T> transition in this.transitions)
-            {
-                Console.WriteLine(transition.toString());
-            }
-
             Console.WriteLine("Next string going though the accept() method for DFA: " + s);
 
             //checks if input string contains values from alphabet
@@ -64,23 +67,11 @@ namespace AutomatentheorieEindopdracht
                 iterationList = getNextStates(iterationList, s[i]);
             }
 
-            //Console.WriteLine(tempStates.Count);
-
-            foreach (T state in iterationList)
-            {
-                Console.WriteLine("tempstate is: " + state.ToString());
-            }
-
-            //Console.WriteLine(tempStates.Last().ToString());
-
             if (finalStates.Contains(iterationList.Last()))
             {
                 return true;
             }
             return false;
-
-            
-            
         }
 
         private List<T> getNextStates(List<T> states, char c)
@@ -95,8 +86,16 @@ namespace AutomatentheorieEindopdracht
                     nextStates.Add(transition.toState);
                 }
             }
-            //Console.WriteLine(nextStates.Count);
+
             return nextStates;
+        }
+
+        public void printTransitions()
+        {
+            foreach (Transition<T> transition in this.transitions)
+            {
+                Console.WriteLine(transition.toString());
+            }
         }
 
     }
