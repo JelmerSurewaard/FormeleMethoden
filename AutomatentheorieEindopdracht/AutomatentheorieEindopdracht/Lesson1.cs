@@ -33,6 +33,8 @@ namespace AutomatentheorieEindopdracht
             automaton.printTransitions();
 
             Console.WriteLine(automaton.accept("bbbb"));
+
+            automaton.generateGraph();
             
             Console.WriteLine("End Lesson 1a");
         }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using csdot;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +89,58 @@ namespace AutomatentheorieEindopdracht
             {
                 Console.WriteLine(transition.toString());
             }
+        }
+
+        public void generateGraph()
+        {
+            Graph graph = new Graph("id");
+
+            List<Node> nodes = new List<Node>();
+
+            graph.strict = false;
+            graph.type = "digraph";
+
+/*            foreach (var state in states)
+            {
+                Node tempNode = new Node(state.ToString());
+                nodes.Add(tempNode);
+            }*/
+
+            foreach (var transition in transitions)
+            {
+                Edge tempEdge = new Edge();
+
+                List<Transition> ts = new List<Transition>()
+                    {
+                new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];"),
+                    };
+
+                //Transition ts = new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];" + "\n");
+                tempEdge.Transition = ts;
+                //tempEdge.AddTransition(new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];" + "\n"));
+                graph.AddElement(tempEdge);
+            }
+
+/*            List<Transition> ts = new List<Transition>()
+            {
+                new Transition("start", "-> " + "q1" + "\n"),
+                new Transition(nodes.ElementAt(1), "Directed")
+            };*/
+
+/*            graph.AddElement(edge);*/
+
+            Console.WriteLine(graph.ElementToString());
+
+
+
+
+            DotDocument doc = new DotDocument();
+            
+           /* using (StreamWriter writer = new StreamWriter("../test.dot"))
+            {
+                writer.Write(graph);
+            }*/
+            doc.SaveToFile(graph, "../test.dot");
         }
     }
 }
