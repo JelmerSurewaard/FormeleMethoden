@@ -1,6 +1,7 @@
 ﻿using csdot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -98,13 +99,53 @@ namespace AutomatentheorieEindopdracht
             graph.strict = false;
             graph.type = "digraph";
 
+            Edge firstEdge = new Edge();
+
+            List<Transition> firstTs = new List<Transition>()
+                    {
+                        new Transition("rankdir = ", "LR;"),
+                        new Transition("node_start", "[label = \"\", shape = none];")
+                    };
+
+
+            firstEdge.Transition = firstTs;
+            graph.AddElement(firstEdge);
+
+            foreach (var state in startStates)
+            {
+                Edge startEdges = new Edge();
+
+                List<Transition> startTs = new List<Transition>()
+                    {
+                        new Transition("node_start -> ", state.ToString() + ";")
+                    };
+
+                startEdges.Transition = startTs;
+                graph.AddElement(startEdges);
+            }
+
+            foreach (var state in finalStates)
+            {
+                Edge endEdges = new Edge();
+
+                List<Transition> endTs = new List<Transition>()
+                    {
+                        new Transition(state.ToString(), "[label =" + state.ToString() + ", shape = doublecircle];")
+                    };
+
+                endEdges.Transition = endTs;
+                graph.AddElement(endEdges);
+            }
+
+            
+
             foreach (var transition in transitions)
             {
                 Edge tempEdge = new Edge();
 
                 List<Transition> ts = new List<Transition>()
                     {
-                        new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];"),
+                        new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];")
                     };
 
                 tempEdge.Transition = ts;
@@ -114,13 +155,13 @@ namespace AutomatentheorieEindopdracht
             DotDocument doc = new DotDocument();
             doc.SaveToFile(graph, output);
 
-            // load the DOT file
-            var converter = new GroupDocs.Conversion.Converter(output);
-            // set the convert options for PNG format
-            var convertOptions = converter.GetPossibleConversions()["png"].ConvertOptions;
-            // convert to PNG format
+
+            ProcessStartInfo startInfo = new ProcessStartInfo("C:/Program Files/Graphviz/bin/dot.exe");
             string tempString = output.Substring(0, output.IndexOf(".dot"));
-            converter.Convert(tempString + ".png", convertOptions);
+            startInfo.Arguments = "-Tpng " + output + " -o" + tempString + ".png";
+            Process.Start(startInfo);
         }
+
+
     }
 }

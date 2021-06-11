@@ -38,9 +38,6 @@
     <Reference Include="csdot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\csdot.2.0.1\lib\net461\csdot.dll</HintPath>
     </Reference>
-    <Reference Include="GroupDocs.Conversion, Version=21.5.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\GroupDocs.Conversion.21.5.0\lib\net20\GroupDocs.Conversion.dll</HintPath>
-    </Reference>
     <Reference Include="SkiaSharp, Version=2.80.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\SkiaSharp.2.80.2\lib\net462\SkiaSharp.dll</HintPath>
     </Reference>
@@ -110,7 +107,5 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\SkiaSharp.2.80.2\build\net462\SkiaSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SkiaSharp.2.80.2\build\net462\SkiaSharp.targets'))" />
-    <Error Condition="!Exists('..\packages\GroupDocs.Conversion.21.5.0\build\net20\GroupDocs.Conversion.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GroupDocs.Conversion.21.5.0\build\net20\GroupDocs.Conversion.targets'))" />
   </Target>
-  <Import Project="..\packages\GroupDocs.Conversion.21.5.0\build\net20\GroupDocs.Conversion.targets" Condition="Exists('..\packages\GroupDocs.Conversion.21.5.0\build\net20\GroupDocs.Conversion.targets')" />
 </Project>
