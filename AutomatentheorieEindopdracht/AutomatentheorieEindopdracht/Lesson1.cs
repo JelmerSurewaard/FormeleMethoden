@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutomatentheorieEindopdracht.Logic;
+using System;
 using System.Collections.Generic;
 
 namespace AutomatentheorieEindopdracht
@@ -10,7 +11,7 @@ namespace AutomatentheorieEindopdracht
 
         }
 
-        public void Lesson1a()
+        public void lesson1a()
         {
             DFA<string> automaton = new DFA<string>(2);
 
@@ -36,7 +37,7 @@ namespace AutomatentheorieEindopdracht
             Console.WriteLine("End Lesson 1a");
         }
 
-        public void Lesson1b()
+        public void lesson1b()
         {
             NDFA<string> automaton = new NDFA<string>(2);
 
@@ -63,6 +64,36 @@ namespace AutomatentheorieEindopdracht
 
             Console.WriteLine("End Lesson 1b");
         }
+
+        public void lesson2a()
+        {
+            var a = new RegEx("a");
+            var b = new RegEx("b");
+
+            // expr1: "baa"
+            var expr1 = new RegEx("baa");
+            // expr2: "bb"
+            var expr2 = new RegEx("bb");
+            // expr3: "baa | baa"
+            var expr3 = expr1.or(expr2);
+
+            // all: "(a|b)*"
+            var all = (a.or(b)).star();
+
+            // expr4: "(baa | baa)+"
+            var expr4 = expr3.plus();
+            // expr5: "(baa | baa)+ (a|b)*"
+            var expr5 = expr4.dot(all);
+
+            //Console.WriteLine("taal van (baa):\n" + expr1.languageToString(expr1.getLanguage(5)));
+            //Console.WriteLine("taal van (bb):\n" + expr2.languageToString(expr2.getLanguage(5)));
+            //Console.WriteLine("taal van (baa | bb):\n" + expr3.languageToString(expr3.getLanguage(5)));
+
+            //Console.WriteLine("taal van (a|b)*:\n" + all.languageToString(all.getLanguage(5)));
+            //Console.WriteLine("taal van (baa | bb)+:\n" + expr4.languageToString(expr4.getLanguage(5)));
+            Console.WriteLine("taal van (baa | bb)+ (a|b)*:\n" + expr5.languageToString(expr5.getLanguage(6)));
+        }
+
 
     }
 }
