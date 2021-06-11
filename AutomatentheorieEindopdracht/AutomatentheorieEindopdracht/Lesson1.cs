@@ -34,7 +34,7 @@ namespace AutomatentheorieEindopdracht
 
             Console.WriteLine(automaton.accept("bbbb"));
 
-            automaton.generateGraph();
+            automaton.generateGraph("../Graphs/DFATest.dot");
             
             Console.WriteLine("End Lesson 1a");
         }

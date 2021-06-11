@@ -88,9 +88,9 @@ namespace AutomatentheorieEindopdracht
             base.printTransitions();
         }
 
-        public void generateGraph()
+        public void generateGraph(string output)
         {
-            base.generateGraph();
+            base.generateGraph(output);
         }
     }
 }

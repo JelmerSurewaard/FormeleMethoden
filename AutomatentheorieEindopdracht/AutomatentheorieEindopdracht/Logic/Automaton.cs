@@ -91,20 +91,12 @@ namespace AutomatentheorieEindopdracht
             }
         }
 
-        public void generateGraph()
+        public void generateGraph(string output)
         {
             Graph graph = new Graph("id");
 
-            List<Node> nodes = new List<Node>();
-
             graph.strict = false;
             graph.type = "digraph";
-
-/*            foreach (var state in states)
-            {
-                Node tempNode = new Node(state.ToString());
-                nodes.Add(tempNode);
-            }*/
 
             foreach (var transition in transitions)
             {
@@ -112,35 +104,23 @@ namespace AutomatentheorieEindopdracht
 
                 List<Transition> ts = new List<Transition>()
                     {
-                new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];"),
+                        new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];"),
                     };
 
-                //Transition ts = new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];" + "\n");
                 tempEdge.Transition = ts;
-                //tempEdge.AddTransition(new Transition(transition.fromState.ToString(), "-> " + transition.toState.ToString() + " [\"label\"=\"" + transition.symbol + "\"];" + "\n"));
                 graph.AddElement(tempEdge);
             }
 
-/*            List<Transition> ts = new List<Transition>()
-            {
-                new Transition("start", "-> " + "q1" + "\n"),
-                new Transition(nodes.ElementAt(1), "Directed")
-            };*/
-
-/*            graph.AddElement(edge);*/
-
-            Console.WriteLine(graph.ElementToString());
-
-
-
-
             DotDocument doc = new DotDocument();
-            
-           /* using (StreamWriter writer = new StreamWriter("../test.dot"))
-            {
-                writer.Write(graph);
-            }*/
-            doc.SaveToFile(graph, "../test.dot");
+            doc.SaveToFile(graph, output);
+
+            // load the DOT file
+            var converter = new GroupDocs.Conversion.Converter(output);
+            // set the convert options for PNG format
+            var convertOptions = converter.GetPossibleConversions()["png"].ConvertOptions;
+            // convert to PNG format
+            string tempString = output.Substring(0, output.IndexOf(".dot"));
+            converter.Convert(tempString + ".png", convertOptions);
         }
     }
 }
