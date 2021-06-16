@@ -62,7 +62,13 @@ namespace AutomatentheorieEindopdracht
 
             automaton.printTransitions();
 
-            Console.WriteLine(automaton.accept("bbbb"));
+            Console.WriteLine(automaton.accept("bab"));
+
+            automaton.generateGraph("../Graphs/NDFATest.dot");
+
+            DFA<string> automaton2 = automaton.toDFA();
+
+            automaton2.generateGraph("../Graphs/DFATest.dot");
 
             Console.WriteLine("End Lesson 1b");
         }
@@ -91,9 +97,13 @@ namespace AutomatentheorieEindopdracht
             //Console.WriteLine("taal van (bb):\n" + expr2.languageToString(expr2.getLanguage(5)));
             //Console.WriteLine("taal van (baa | bb):\n" + expr3.languageToString(expr3.getLanguage(5)));
 
-            //Console.WriteLine("taal van (a|b)*:\n" + all.languageToString(all.getLanguage(5)));
+            Console.WriteLine("Language? van (a|b)*:");
+            all.printLanguage(all.getLanguage(4));
+
+            NDFA<string> automaton = all.toNFDA(all.getLanguage(4));
+            
             //Console.WriteLine("taal van (baa | bb)+:\n" + expr4.languageToString(expr4.getLanguage(5)));
-            Console.WriteLine("taal van (baa | bb)+ (a|b)*:\n" + expr5.languageToString(expr5.getLanguage(6)));
+            //Console.WriteLine("taal van (baa | bb)+ (a|b)*:\n" + expr5.languageToString(expr5.getLanguage(6)));
         }
 
 

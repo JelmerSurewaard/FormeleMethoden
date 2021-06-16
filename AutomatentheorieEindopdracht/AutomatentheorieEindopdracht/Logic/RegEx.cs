@@ -9,7 +9,8 @@ namespace AutomatentheorieEindopdracht.Logic
     class RegEx
     {
         public Operator operate { get; set; }
-        public String terminals { get; }
+        public String terminals { get; set; }
+        private SortedSet<char> alphabet { get; set; }
         public enum Operator { PLUS, STAR, OR, DOT, ONE }
 
         public RegEx left;
@@ -19,6 +20,7 @@ namespace AutomatentheorieEindopdracht.Logic
         {
             operate = Operator.ONE;
             terminals = "";
+            this.alphabet = new SortedSet<char>();
             left = null;
             right = null;
         }
@@ -26,6 +28,11 @@ namespace AutomatentheorieEindopdracht.Logic
         {
             operate = Operator.ONE;
             terminals = p;
+            this.alphabet = new SortedSet<char>();
+            foreach (char c in p)
+            {
+                this.alphabet.Add(c);
+            }
             left = null;
             right = null;
         }
@@ -34,6 +41,7 @@ namespace AutomatentheorieEindopdracht.Logic
         public RegEx plus()
         {
             RegEx result = new RegEx();
+            result.alphabet = alphabet;
             result.operate = Operator.PLUS;
             result.left = this;
             return result;
@@ -42,6 +50,7 @@ namespace AutomatentheorieEindopdracht.Logic
         public RegEx star()
         {
             RegEx result = new RegEx();
+            result.alphabet = alphabet;
             result.operate = Operator.STAR;
             result.left = this;
             return result;
@@ -50,6 +59,11 @@ namespace AutomatentheorieEindopdracht.Logic
         public RegEx or(RegEx e2)
         {
             RegEx result = new RegEx();
+            result.alphabet = alphabet;
+            foreach (char c in e2.alphabet)
+            {
+                result.alphabet.Add(c);
+            }
             result.operate = Operator.OR;
             result.left = this;
             result.right = e2;
@@ -59,6 +73,11 @@ namespace AutomatentheorieEindopdracht.Logic
         public RegEx dot(RegEx e2)
         {
             RegEx result = new RegEx();
+            result.alphabet = alphabet;
+            foreach (char c in e2.alphabet)
+            {
+                result.alphabet.Add(c);
+            }
             result.operate = Operator.DOT;
             result.left = this;
             result.right = e2;
@@ -138,16 +157,24 @@ namespace AutomatentheorieEindopdracht.Logic
             return languageResult;
         }
 
-        public string languageToString(SortedSet<String> language)
+        public void printLanguage(SortedSet<String> language)
         {
-            string tempString = "";
-
-            foreach (var item in language)
+            foreach (string item in language)
             {
-                tempString += item;
+                Console.WriteLine(item);
+            }
+        }
+
+        public NDFA<string> toNFDA(SortedSet<String> language)
+        {
+            NDFA<string> ndfa = new NDFA<string>(this.alphabet.Count);
+
+            foreach (string vari in language)  
+            {
+                //dosomething
             }
 
-            return tempString;
+            return null;
         }
     }
 }

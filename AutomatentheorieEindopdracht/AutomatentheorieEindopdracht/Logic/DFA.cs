@@ -19,7 +19,7 @@ namespace AutomatentheorieEindopdracht
             this.states = base.states;
             this.startStates = base.startStates;
             this.finalStates = base.finalStates;
-            this.alphabet = new SortedSet<char>();
+            this.alphabet = base.alphabet;
             fillAlphabet(n);
         }
 
@@ -78,7 +78,7 @@ namespace AutomatentheorieEindopdracht
             return false;
         }
 
-        private new List<T> getNextStates(List<T> states, char c)
+        public new List<T> getNextStates(List<T> states, char c)
         {
             return base.getNextStates(states, c);
         }

@@ -8,7 +8,7 @@ namespace AutomatentheorieEindopdracht
 {
     class Transition <T> : IComparable<Transition<T>> where T : IComparable
     {
-        public static char EPSILON = '$';
+        public static char EPSILON = 'ε';
 
         public T fromState { get; set; }
         public char symbol { get; set; }

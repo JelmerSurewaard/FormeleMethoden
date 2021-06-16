@@ -69,7 +69,7 @@ namespace AutomatentheorieEindopdracht
             throw new NotImplementedException();
         }
 
-        protected List<T> getNextStates(List<T> states, char c)
+        public List<T> getNextStates(List<T> states, char c)
         {
             List<T> nextStates = states;
             T lastState = nextStates.Last();
@@ -162,6 +162,9 @@ namespace AutomatentheorieEindopdracht
             Process.Start(startInfo);
         }
 
-
+        internal void addTransition<T>(Transition<T> transition) where T : IComparable
+        {
+            throw new NotImplementedException();
+        }
     }
 }
