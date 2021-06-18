@@ -176,5 +176,35 @@ namespace AutomatentheorieEindopdracht.Logic
 
             return null;
         }
+
+        public override string ToString()
+        {
+            string leftS = "", rightS = "", regS = "";
+            if (left != null) leftS = left.ToString();
+            if (right != null) rightS = right.ToString();
+
+            switch (operate)
+            {
+                case Operator.PLUS:
+                    regS = $"{leftS}+";
+                    break;
+                case Operator.STAR:
+                    regS = $"{leftS}*";
+                    break;
+                case Operator.OR:
+                    regS = $"({leftS}|{rightS})";
+                    break;
+                case Operator.DOT:
+                    regS = $"({leftS}.{rightS})";
+                    break;
+                case Operator.ONE:
+                    regS = terminals;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return regS;
+        }
     }
 }

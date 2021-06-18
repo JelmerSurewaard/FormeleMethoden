@@ -51,6 +51,32 @@ namespace AutomatentheorieEindopdracht
             base.defineAsFinalState(t);
         }
 
+        public bool IsDFA()
+        {
+            bool isDFA = true;
+
+            foreach (T from in states)
+                foreach (char symbol in alphabet)
+                {
+                    isDFA = isDFA && GetToStates(from, symbol).Count == 1;
+                    if (!isDFA)
+                        return false;
+                }
+
+            return true;
+        }
+
+        public List<T> GetToStates(T from, char symbol)
+        {
+            List<T> toStates = new List<T>();
+
+            foreach (Transition<T> t in transitions)
+                if (t.fromState.Equals(from) && t.symbol.Equals(symbol))
+                    toStates.Add(t.toState);
+
+            return toStates;
+        }
+
         //Checks if input string is accepted in DFA
         public bool accept(String s)
         {

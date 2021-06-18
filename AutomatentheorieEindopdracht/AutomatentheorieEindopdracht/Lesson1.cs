@@ -99,6 +99,7 @@ namespace AutomatentheorieEindopdracht
 
             Console.WriteLine("Language? van (a|b)*:");
             all.printLanguage(all.getLanguage(4));
+            Console.WriteLine(all.ToString());
 
             NDFA<string> automaton = all.toNFDA(all.getLanguage(4));
             
