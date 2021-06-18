@@ -101,8 +101,12 @@ namespace AutomatentheorieEindopdracht
             all.printLanguage(all.getLanguage(4));
             Console.WriteLine(all.ToString());
 
-            NDFA<string> automaton = all.toNFDA(all.getLanguage(4));
-            
+            NDFA<string> automaton = RegExConverter.CreateNDFA(all);
+
+            automaton.printTransitions();
+
+            automaton.generateGraph("../Graphs/NDFAFromRegExTest.dot");
+
             //Console.WriteLine("taal van (baa | bb)+:\n" + expr4.languageToString(expr4.getLanguage(5)));
             //Console.WriteLine("taal van (baa | bb)+ (a|b)*:\n" + expr5.languageToString(expr5.getLanguage(6)));
         }

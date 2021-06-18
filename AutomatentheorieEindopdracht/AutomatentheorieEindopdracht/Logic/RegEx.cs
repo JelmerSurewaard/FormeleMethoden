@@ -10,7 +10,7 @@ namespace AutomatentheorieEindopdracht.Logic
     {
         public Operator operate { get; set; }
         public String terminals { get; set; }
-        private SortedSet<char> alphabet { get; set; }
+        public SortedSet<char> alphabet { get; set; }
         public enum Operator { PLUS, STAR, OR, DOT, ONE }
 
         public RegEx left;
@@ -163,18 +163,6 @@ namespace AutomatentheorieEindopdracht.Logic
             {
                 Console.WriteLine(item);
             }
-        }
-
-        public NDFA<string> toNFDA(SortedSet<String> language)
-        {
-            NDFA<string> ndfa = new NDFA<string>(this.alphabet.Count);
-
-            foreach (string vari in language)  
-            {
-                //dosomething
-            }
-
-            return null;
         }
 
         public override string ToString()
