@@ -48,9 +48,38 @@ namespace AutomatentheorieEindopdracht.Logic
 
         public static void Rule1_2(RegEx reg, ref NDFA<string> a, ref int c, string leftState, string rightState)
         {
-            var symbol = reg.terminals.First();
+            var j = 1;
+            for (int i = 0; i < reg.terminals.Length; i++)
+            {
+                var symbol = reg.terminals.ElementAt(i);
+
+                if (i == (reg.terminals.Length - 1))
+                {
+                    a.alphabet.Add(symbol);
+                    a.addTransition(new Transition<string>(leftState, symbol, rightState));
+                } else
+                {
+                    var newRightState = "q" + (Int32.Parse(leftState.Split('q')[1]) + 1 + j);
+                    j = 0;
+                    c += 1;
+                    a.alphabet.Add(symbol);
+                    a.addTransition(new Transition<string>(leftState, symbol, newRightState));
+                    leftState = newRightState;
+                    
+                }
+
+            }
+           /* foreach (char symbol in reg.terminals)
+            {
+                var newRightState = "q" + (Int32.Parse(leftState.Split('q')[1]) + 1);
+                c += 1;
+                a.alphabet.Add(symbol);
+                a.addTransition(new Transition<string>(leftState, symbol, newRightState));
+                leftState = newRightState;
+            }*/
+            /*var symbol = reg.terminals.first();
             a.alphabet.Add(symbol);
-            a.addTransition(new Transition<string>(leftState, symbol, rightState));
+            a.addTransition(new Transition<string>(leftState, symbol, rightState));*/
         }
 
         public static void Rule3(RegEx reg, ref NDFA<string> a, ref int c, string leftState, string rightState)
