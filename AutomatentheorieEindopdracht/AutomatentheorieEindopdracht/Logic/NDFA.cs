@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csdot.Attributes.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace AutomatentheorieEindopdracht
             this.alphabet = base.alphabet;
             fillAlphabet(n);
         }
-         private void fillAlphabet(int n)
+        private void fillAlphabet(int n)
         {
             base.fillAlphabet(n);
         }
@@ -72,12 +73,32 @@ namespace AutomatentheorieEindopdracht
                     return true;
                 }
             }
-            
+
             return false;
         }
         public new List<T> getNextStates(List<T> states, char c)
         {
             return base.getNextStates(states, c);
+        }
+
+        public List<T> getNextStatesEpsilon(string state, char c)
+        {
+            List<T> nextStates = new List<T>();
+
+            foreach (Transition<T> transition in transitions)
+            {
+                if (transition.fromState.Equals(state) && transition.symbol.Equals(c))
+                {
+                    nextStates.Add(transition.toState);
+                    
+                    //getNextStatesEpsilon(transition.toState.ToString(), Transition<T>.EPSILON);
+                } else if (transition.fromState.Equals(state) && transition.symbol.Equals(Transition<T>.EPSILON))
+                {
+                    getNextStatesEpsilon(transition.toState.ToString(), transition.symbol);
+                }
+            }
+
+            return nextStates;
         }
 
         public new void printTransitions()
@@ -90,59 +111,5 @@ namespace AutomatentheorieEindopdracht
             base.generateGraph(output);
         }
 
-        public DFA<string> toDFA()
-        {
-            DFA<string> dfa = new DFA<string>(this.alphabet.Count);
-            List<T> toStates = new List<T>();
-
-            foreach (Transition<T> transition in this.transitions)
-            {
-                List<T> iterationList = new List<T>();
-                iterationList.Add(transition.fromState);
-                toStates = this.getNextStates(iterationList, transition.symbol);
-
-                if (toStates.Count > 1)
-                {
-                    string newState = "";
-                    int i = 0;
-                    toStates.ToList().ForEach(state =>
-                    {
-                        if (i == 0)
-                        {
-                            newState = state.ToString();
-                        }
-                        else
-                        {
-                            newState = newState +  state;
-                        }
-                        i++;
-                    });
-
-                    dfa.addTransition(new Transition<string>(transition.fromState.ToString(), transition.symbol, newState));
-
-                    foreach (char symbol in this.alphabet)
-                    {
-                        if (symbol == transition.symbol)
-                        {
-                            dfa.addTransition(new Transition<string>(newState.ToString(), transition.symbol, newState.ToString()));
-                        }
-                        else
-                        {
-                            List<T> states = this.getNextStates(iterationList, symbol);
-                            if (states.Count < 2)
-                            {
-                                dfa.addTransition(new Transition<string>(newState.ToString(), symbol, states.ToList().ElementAt(0).ToString()));
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    dfa.addTransition(transition);
-                }
-            }
-
-            return dfa;
-        }
     }
 }

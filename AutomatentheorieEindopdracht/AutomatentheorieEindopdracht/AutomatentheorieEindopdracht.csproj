@@ -91,6 +91,7 @@
     <Compile Include="Logic\DFA.cs" />
     <Compile Include="Lesson1.cs" />
     <Compile Include="Logic\NDFA.cs" />
+    <Compile Include="Logic\NDFAConverter.cs" />
     <Compile Include="Logic\RegEx.cs" />
     <Compile Include="Logic\RegExConverter.cs" />
     <Compile Include="Program.cs" />

@@ -109,6 +109,20 @@ namespace AutomatentheorieEindopdracht
             return base.getNextStates(states, c);
         }
 
+        public string getNextState(string state, char c)
+        {
+            string nextState = "";
+
+            foreach (Transition<T> transition in transitions)
+            {
+                if (transition.fromState.Equals(state) && transition.symbol.Equals(c))
+                {
+                    nextState = transition.toState.ToString();
+                }
+            }
+            return nextState;
+        } 
+
         public new void printTransitions()
         {
             base.printTransitions();

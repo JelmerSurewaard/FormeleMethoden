@@ -67,19 +67,7 @@ namespace AutomatentheorieEindopdracht.Logic
                     leftState = newRightState;
                     
                 }
-
             }
-           /* foreach (char symbol in reg.terminals)
-            {
-                var newRightState = "q" + (Int32.Parse(leftState.Split('q')[1]) + 1);
-                c += 1;
-                a.alphabet.Add(symbol);
-                a.addTransition(new Transition<string>(leftState, symbol, newRightState));
-                leftState = newRightState;
-            }*/
-            /*var symbol = reg.terminals.first();
-            a.alphabet.Add(symbol);
-            a.addTransition(new Transition<string>(leftState, symbol, rightState));*/
         }
 
         public static void Rule3(RegEx reg, ref NDFA<string> a, ref int c, string leftState, string rightState)

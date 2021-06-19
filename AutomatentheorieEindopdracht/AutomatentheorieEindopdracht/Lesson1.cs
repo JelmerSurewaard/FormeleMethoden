@@ -43,22 +43,25 @@ namespace AutomatentheorieEindopdracht
         {
             NDFA<string> automaton = new NDFA<string>(2);
 
-            automaton.addTransition(new Transition<string>("q0", 'a', "q1"));
-            automaton.addTransition(new Transition<string>("q0", 'a'));
-            automaton.addTransition(new Transition<string>("q0", 'b'));
-            automaton.addTransition(new Transition<string>("q0", 'b', "q3"));
+            automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
+            automaton.addTransition(new Transition<string>("q1", 'a', "q3"));
+            automaton.addTransition(new Transition<string>("q1", 'b', "q4"));
 
-            automaton.addTransition(new Transition<string>("q1", 'b', "q2"));
+            automaton.addTransition(new Transition<string>("q2", 'b', "q1"));
+            automaton.addTransition(new Transition<string>("q2", 'a', "q3"));
+            automaton.addTransition(new Transition<string>("q2", "q3"));
 
-            automaton.addTransition(new Transition<string>("q2", 'b', "q4"));
+            automaton.addTransition(new Transition<string>("q3", 'a', "q3"));
+            automaton.addTransition(new Transition<string>("q3", 'b', "q5"));
+            automaton.addTransition(new Transition<string>("q3", "q4"));
 
-            automaton.addTransition(new Transition<string>("q3", 'a', "q4"));
+            automaton.addTransition(new Transition<string>("q4", 'a', "q5"));
 
-            automaton.addTransition(new Transition<string>("q4", 'a'));
-            automaton.addTransition(new Transition<string>("q4", 'b'));
+            automaton.addTransition(new Transition<string>("q5", 'a', "q4"));
+            
 
-            automaton.defineAsStartState("q0");
-            automaton.defineAsFinalState("q4");
+            automaton.defineAsStartState("q1");
+            automaton.defineAsFinalState("q5");
 
             automaton.printTransitions();
 
@@ -66,7 +69,7 @@ namespace AutomatentheorieEindopdracht
 
             automaton.generateGraph("../Graphs/NDFATest.dot");
 
-            DFA<string> automaton2 = automaton.toDFA();
+            DFA<string> automaton2 = NDFAConverter.createDFA(automaton);
 
             automaton2.generateGraph("../Graphs/DFATest.dot");
 
