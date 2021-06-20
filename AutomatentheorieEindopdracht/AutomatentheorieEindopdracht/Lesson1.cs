@@ -180,93 +180,95 @@ namespace AutomatentheorieEindopdracht
 
         public void minimalize()
         {
+            DFA<string> automaton = new DFA<string>(2);
+
+            automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
+            automaton.addTransition(new Transition<string>("q1", 'b', "q3"));
+
+            automaton.addTransition(new Transition<string>("q2", 'a', "q6"));
+            automaton.addTransition(new Transition<string>("q2", 'b', "q2"));
+
+            automaton.addTransition(new Transition<string>("q3", 'a', "q4"));
+            automaton.addTransition(new Transition<string>("q3", 'b', "q5"));
+
+            automaton.addTransition(new Transition<string>("q4", 'a', "q2"));
+            automaton.addTransition(new Transition<string>("q4", 'b', "q3"));
+
+            automaton.addTransition(new Transition<string>("q5", 'a', "q8"));
+            automaton.addTransition(new Transition<string>("q5", 'b', "q7"));
+
+            automaton.addTransition(new Transition<string>("q6", 'a', "q7"));
+            automaton.addTransition(new Transition<string>("q6", 'b', "q5"));
+
+            automaton.addTransition(new Transition<string>("q7", 'a', "q5"));
+            automaton.addTransition(new Transition<string>("q7", 'b', "q8"));
+
+            automaton.addTransition(new Transition<string>("q8", 'a', "q9"));
+            automaton.addTransition(new Transition<string>("q8", 'b', "q10"));
+
+            automaton.addTransition(new Transition<string>("q9", 'a', "q9"));
+            automaton.addTransition(new Transition<string>("q9", 'b', "q10"));
+
+            automaton.addTransition(new Transition<string>("q10", 'a', "q10"));
+            automaton.addTransition(new Transition<string>("q10", 'b', "q10"));
+
+            automaton.defineAsStartState("q1");
+
+            automaton.defineAsFinalState("q6");
+            automaton.defineAsFinalState("q8");
+            automaton.defineAsFinalState("q9");
+
+            automaton.printTransitions();
+            automaton.generateGraph("../Graphs/DFApreMinimizeTest.dot");
+            Console.WriteLine("minimalization...");
+
+            Minimalization minimalization = new Minimalization();
+
+            var minimize = minimalization.minimalize(automaton);
+
+            minimize.generateGraph("../Graphs/DFAPostMinimizeTest.dot");
+            Console.WriteLine("minimalization complete");
+
+            // Check if DFA accepts.
+            //Console.WriteLine(minimize.accept("ba"));
+        }
+
+        public void minimalizeReverse()
+        {
             NDFA<string> automaton = new NDFA<string>(2);
 
             automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
             automaton.addTransition(new Transition<string>("q1", 'a', "q3"));
             automaton.addTransition(new Transition<string>("q1", 'b', "q4"));
-            Minimalization minimalization = new Minimalization();
-
-            //automaton.addTransition(new Transition<string>("q0", 'a'));
-            //automaton.addTransition(new Transition<string>("q0", 'b', "q1"));
-
-            //automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
-            //automaton.addTransition(new Transition<string>("q1", 'b'));
 
             automaton.addTransition(new Transition<string>("q2", 'b', "q1"));
             automaton.addTransition(new Transition<string>("q2", 'a', "q3"));
             automaton.addTransition(new Transition<string>("q2", "q3"));
-            //automaton.addTransition(new Transition<string>("q2", 'a', "q0"));
-            //automaton.addTransition(new Transition<string>("q2", 'b', "q3"));
 
             automaton.addTransition(new Transition<string>("q3", 'a', "q3"));
             automaton.addTransition(new Transition<string>("q3", 'b', "q5"));
             automaton.addTransition(new Transition<string>("q3", "q4"));
-            //automaton.addTransition(new Transition<string>("q3", 'a', "q4"));
-            //automaton.addTransition(new Transition<string>("q3", 'b', "q1"));
 
             automaton.addTransition(new Transition<string>("q4", 'a', "q5"));
-            //automaton.addTransition(new Transition<string>("q4", 'a', "q5"));
-            //automaton.addTransition(new Transition<string>("q4", 'b', "q3"));
 
             automaton.addTransition(new Transition<string>("q5", 'a', "q4"));
-            //automaton.addTransition(new Transition<string>("q5", 'a', "q0"));
-            //automaton.addTransition(new Transition<string>("q5", 'b', "q3"));
 
 
             automaton.defineAsStartState("q1");
             automaton.defineAsStartState("q2");
             automaton.defineAsFinalState("q5");
-            //automaton.defineAsStartState("q0");
-            //automaton.defineAsFinalState("q2");
-            //automaton.defineAsFinalState("q4");
 
             Minimalization minimalization = new Minimalization();
             NDFAConverter nDFAConverter = new NDFAConverter();
-            automaton.addTransition(new Transition<string>("1", 'a', "2"));
-            automaton.addTransition(new Transition<string>("1", 'b', "3"));
 
-
-            automaton.addTransition(new Transition<string>("2", 'a', "6"));
-            automaton.addTransition(new Transition<string>("2", 'b', "2"));
-
-            automaton.addTransition(new Transition<string>("3", 'a', "4"));
-            automaton.addTransition(new Transition<string>("3", 'b', "5"));
-
-            automaton.addTransition(new Transition<string>("4", 'a', "2"));
-            automaton.addTransition(new Transition<string>("4", 'b', "3"));
-
-            automaton.addTransition(new Transition<string>("5", 'a', "8"));
-            automaton.addTransition(new Transition<string>("5", 'b', "7"));
-
-            automaton.addTransition(new Transition<string>("6", 'a', "7"));
-            automaton.addTransition(new Transition<string>("6", 'b', "5"));
-
-            automaton.addTransition(new Transition<string>("7", 'a', "5"));
-            automaton.addTransition(new Transition<string>("7", 'b', "8"));
-
-            automaton.addTransition(new Transition<string>("8", 'a', "9"));
-            automaton.addTransition(new Transition<string>("8", 'b', "10"));
-
-            automaton.addTransition(new Transition<string>("9", 'a', "9"));
-            automaton.addTransition(new Transition<string>("9", 'b', "10"));
-
-            automaton.addTransition(new Transition<string>("10", 'a', "10"));
-            automaton.addTransition(new Transition<string>("10", 'b', "10"));
-
-            automaton.defineAsStartState("1");
-
-            automaton.defineAsFinalState("6");
-            automaton.defineAsFinalState("8");
-            automaton.defineAsFinalState("9");
 
             automaton.printTransitions();
             automaton.generateGraph("../Graphs/NDFApreReverseTest.dot");
-            Console.WriteLine("minimalization...");
+            Console.WriteLine("reversing...");
 
             var automaton2 = minimalization.reverseAutomaton(automaton);
             automaton2.printTransitions();
-            Console.WriteLine("minimalization complete... Converting to DFA...");
+            Console.WriteLine("reverse complete... Converting to DFA...");
             automaton2.generateGraph("../Graphs/ReverseTest.dot");
 
             var automaton3 = nDFAConverter.createDFA(automaton2);
