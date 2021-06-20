@@ -145,13 +145,27 @@ namespace AutomatentheorieEindopdracht
             var a = new RegEx("a");
             var b = new RegEx("b");
 
-            // all: "((ab)|(b+a+)):"
-            var all = (a.dot(b)).or(b.plus().dot(a.plus()));
+            // expr1: "baa"
+            var expr1 = new RegEx("baa");
+            // expr2: "bb"
+            var expr2 = new RegEx("bb");
+            // expr3: "baa | bb"
+            var expr3 = expr1.or(expr2);
 
-            Console.WriteLine("Language? van " + all.ToString() + ":");
-            all.printLanguage(all.getLanguage(4));
+            // all: "(a|b)*"
+            var all = (a.or(b)).star();
 
-            NDFA<string> automaton = RegExConverter.CreateNDFA(all);
+            // expr4: "(baa | bb)+"
+            var expr4 = expr3.plus();
+            // expr5: "(baa | bb)+ (a|b)*"
+            var expr5 = expr4.dot(all);
+
+            
+
+            Console.WriteLine("Language? van " + expr4.ToString() + ":");
+            expr5.printLanguage(expr4.getLanguage(4));
+
+            NDFA<string> automaton = RegExConverter.CreateNDFA(expr4);
 
             automaton.generateGraph("../Graphs/NDFAFromRegExTest.dot");
 

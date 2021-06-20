@@ -51,12 +51,12 @@ namespace AutomatentheorieEindopdracht.Logic
                     string[] fromStates = state.Split('q');
                     List<string> toStatesList = new List<string>();
 
-                    //var specificTrans = ndfa.getTransitions(state, symbol);
+                        for (int i = 1; i < fromStates.Length; i++)
+                        {
+                            toStatesList.AddRange(ndfa.getNextStatesEpsilon("q" + fromStates[i], symbol, false));
+                        }
 
-                    for (int i = 1; i < fromStates.Length; i++)
-                    {
-                        toStatesList.AddRange(ndfa.getNextStatesEpsilon("q" + fromStates[i], symbol, false));
-                    }
+                    
 
                     toStatesList = toStatesList.Distinct().ToList();
 
@@ -68,17 +68,31 @@ namespace AutomatentheorieEindopdracht.Logic
                     {
                         tempToState = "Fuik";
                     }
-                    tempDFA.transitions.Add(new Transition<string>(state, symbol, tempToState));
+                    if (newStates.Contains(tempToState))
+                    {
+                        tempDFA.transitions.Add(new Transition<string>(state, symbol, tempToState));
+                    }
+                   
                 }
             }
 
             tempDFA.states = newStates;
             tempDFA.startStates = ndfa.startStates;
+
+            //add Finalstates to new DFA
+
             foreach (var state in newStates)
             {
-                if (state.Contains(ndfa.finalStates.ElementAt(0).ToString()))
+                var tempString = state.Split('q');
+
+                var tempFinalState = ndfa.finalStates.ElementAt(0).ToString().Split('q');
+
+                foreach (var item in tempString)
                 {
-                    tempDFA.finalStates.Add(state);
+                    if (item.Equals(tempFinalState.Last()))
+                    {
+                        tempDFA.finalStates.Add(state);
+                    }
                 }
             }
 
