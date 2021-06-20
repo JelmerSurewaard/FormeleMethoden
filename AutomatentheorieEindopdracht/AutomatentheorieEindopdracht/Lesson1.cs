@@ -145,8 +145,8 @@ namespace AutomatentheorieEindopdracht
             var a = new RegEx("a");
             var b = new RegEx("b");
 
-            // all: "(a|b)*"
-            var all = (a.or(b));
+            // all: "((ab)|(b+a+)):"
+            var all = (a.dot(b)).or(b.plus().dot(a.plus()));
 
             Console.WriteLine("Language? van " + all.ToString() + ":");
             all.printLanguage(all.getLanguage(4));

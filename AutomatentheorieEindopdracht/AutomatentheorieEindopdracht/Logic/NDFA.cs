@@ -81,38 +81,44 @@ namespace AutomatentheorieEindopdracht
             return base.getNextStates(states, c);
         }
 
-        public List<T> getNextStatesEpsilon(string state, char c)
+        public HashSet<T> getNextStatesEpsilon(string state, char c, bool isUsed)
         {
-            List<T> nextStates = new List<T>();
+            //Implement IsUsed
+
+            HashSet<T> nextStates = new HashSet<T>();
 
             foreach (Transition<T> transition in transitions)
             {
                 if (transition.fromState.Equals(state))
                 {
+                    /*var specificTrans1 = getTransitions(transition.toState.ToString(), c);*/
                     if (transition.symbol == Transition<T>.EPSILON)
                     {
+
                         if (c == Transition<T>.EPSILON)
                         {
                             nextStates.Add(transition.toState);
-                            nextStates.AddRange(getNextStatesEpsilon(transition.toState.ToString(), Transition<T>.EPSILON));
+                            //Console.WriteLine("Test1");
+                            nextStates.UnionWith(getNextStatesEpsilon(transition.toState.ToString(), Transition<T>.EPSILON, isUsed));
                         }
                         else
                         {
-                            nextStates.AddRange(getNextStatesEpsilon(transition.toState.ToString(), c));
+                            //Console.WriteLine("Test2");
+                            nextStates.UnionWith(getNextStatesEpsilon(transition.toState.ToString(), c, isUsed));
                         }
                     }
-                    else if(c == transition.symbol)
+                    else if (c == transition.symbol)
                     {
                         nextStates.Add(transition.toState);
-                        nextStates.AddRange(getNextStatesEpsilon(transition.toState.ToString(), Transition<T>.EPSILON));
+                        //Console.WriteLine("Test3");
+                        isUsed = true;
+                        nextStates.UnionWith(getNextStatesEpsilon(transition.toState.ToString(), Transition<T>.EPSILON, isUsed));
                     }
                 }
                 
             }
 
-            var uniqueNextStates = nextStates.Distinct().ToList();
-
-            return uniqueNextStates;
+            return nextStates;
         }
 
         public new void printTransitions()
@@ -123,6 +129,19 @@ namespace AutomatentheorieEindopdracht
         public void generateGraph(string output)
         {
             base.generateGraph(output);
+        }
+
+        public List<Transition<T>> getTransitions(string fromState, char symbol)
+        {
+            var allTransitions = new List<Transition<T>>();
+            foreach (var trans in transitions)
+            {
+                if (trans.fromState.Equals(fromState) && (trans.symbol.Equals(symbol) || trans.symbol.Equals(Transition<T>.EPSILON)))
+                {
+                    allTransitions.Add(trans);
+                }
+            }
+            return allTransitions;
         }
 
     }

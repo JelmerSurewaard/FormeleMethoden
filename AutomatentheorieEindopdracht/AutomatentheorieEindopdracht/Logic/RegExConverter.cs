@@ -111,7 +111,7 @@ namespace AutomatentheorieEindopdracht.Logic
         {
             var newLeftState = "q" + (c + 1).ToString();
             var newRightState = "q" + (c + 2).ToString();
-            c=+2;
+            c+=2;
 
             a.addTransition(new Transition<string>(leftState, Transition<string>.EPSILON, rightState));
             a.addTransition(new Transition<string>(leftState, Transition<string>.EPSILON, newLeftState));

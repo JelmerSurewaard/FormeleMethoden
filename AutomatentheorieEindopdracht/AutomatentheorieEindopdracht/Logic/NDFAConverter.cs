@@ -23,7 +23,9 @@ namespace AutomatentheorieEindopdracht.Logic
                
                 foreach (var symbol in ndfa.alphabet)
                 {
-                    var toStates = ndfa.getNextStatesEpsilon(state, symbol);
+                    
+                    //var specificTrans = ndfa.getTransitions(state, symbol);
+                    var toStates = ndfa.getNextStatesEpsilon(state, symbol, false);
                     string tempString = "";
                     foreach (string s in toStates)
                     {
@@ -48,9 +50,12 @@ namespace AutomatentheorieEindopdracht.Logic
                     string tempToState = "";
                     string[] fromStates = state.Split('q');
                     List<string> toStatesList = new List<string>();
+
+                    //var specificTrans = ndfa.getTransitions(state, symbol);
+
                     for (int i = 1; i < fromStates.Length; i++)
                     {
-                        toStatesList.AddRange(ndfa.getNextStatesEpsilon("q" + fromStates[i], symbol));
+                        toStatesList.AddRange(ndfa.getNextStatesEpsilon("q" + fromStates[i], symbol, false));
                     }
 
                     toStatesList = toStatesList.Distinct().ToList();
@@ -76,6 +81,39 @@ namespace AutomatentheorieEindopdracht.Logic
                     tempDFA.finalStates.Add(state);
                 }
             }
+
+            //Check if endless state exists. If not, delete endless state from transitions.
+            int fuikExists = 0;
+            foreach (var trans in tempDFA.transitions)
+            {
+                if (trans.toState.Equals("Fuik"))
+                {
+                    fuikExists++;
+                }
+            }
+
+            if (fuikExists == tempDFA.alphabet.Count)
+            {
+                var temp2DFA = new List<Transition<string>>();
+
+                foreach (var trans in tempDFA.transitions)
+                {
+                    if (!trans.toState.ToString().Equals("Fuik"))
+                    {
+                        temp2DFA.Add(trans);
+                    }
+                }
+
+                tempDFA.transitions.Clear();
+
+
+                for (int i = 0; i < temp2DFA.Count(); i++)
+                {
+                    tempDFA.transitions.Add(temp2DFA.ElementAt(i));
+                }
+                
+            }
+
             return tempDFA;
         }
     }
