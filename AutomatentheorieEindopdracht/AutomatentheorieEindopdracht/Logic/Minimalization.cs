@@ -95,15 +95,30 @@ namespace AutomatentheorieEindopdracht.Logic
                     }
                     else
                     {
-                        //DIT KLOPT ALS ENIGE NIEEE FF FIXWEN EN DAN IS T GOEI
-                        Dictionary<char[], List<string>> temp = rows.GroupBy(
-                        v => v.Value).ToDictionary(k => k.Key, k => k.Select(v => v.Key).ToList());
-
-                        foreach (var value in temp.Values)
+                       while(rows.Count != 0)
                         {
-                            newPartitions.Add(new Partition(this.partitionName[0], convertListToSS(value)));
+                            Partition tempP = new Partition();
+                            
+                                char[] transition = rows.ElementAt(0).Value; //A, A
+                                tempP.ab = transition;
+
+                                foreach(var row in rows)
+                                {
+                                    if (compareArrays(row.Value, transition))
+                                    {
+                                        tempP.States.Add(row.Key);
+                                    }
+                                }
+
+                                foreach (var state in tempP.States)
+                                {
+                                    rows.Remove(state);
+                                }
+
+                            tempP.PartitionName = this.partitionName[0];
                             popStateNames();
-                        }
+                            newPartitions.Add(tempP);
+                        }                               
                     }
                 }
                 return newPartitions;
@@ -111,6 +126,11 @@ namespace AutomatentheorieEindopdracht.Logic
 
             return null;
 
+        }
+
+        private bool compareArrays(char[] a, char[] b)
+        {
+            if ( a[0] == b[0] && a[1] == b[1]) { return true; } else { return false; }
         }
 
         private SortedSet<string> convertListToSS(List<string> list)
@@ -185,7 +205,10 @@ namespace AutomatentheorieEindopdracht.Logic
 
             public char[] ab { get; set; }
 
-                public Partition(char PartitionName, SortedSet<string> states)
+            public Partition() {
+            this.States = new SortedSet<string>();
+        }
+            public Partition(char PartitionName, SortedSet<string> states)
                 {
                     this.PartitionName = PartitionName;
                     this.States = states;
