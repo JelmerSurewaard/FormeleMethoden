@@ -58,7 +58,7 @@ namespace AutomatentheorieEindopdracht.Logic
 
         private List<Partition> partitionize(List<Partition> allPartitions)
         {
-            this.finalP = new List<Partition>() ;
+            List<Partition> newPartitions = new List<Partition>() ;
             
             if ( this.lastItiration )
             {
@@ -92,7 +92,7 @@ namespace AutomatentheorieEindopdracht.Logic
                     }
                     if (temp_bool) 
                     {
-                        this.finalP.Add(p);
+                        newPartitions.Add(p);
                     }
                     else
                     {
@@ -118,11 +118,11 @@ namespace AutomatentheorieEindopdracht.Logic
 
                             tempP.PartitionName = this.partitionName[0];
                             popStateNames();
-                            this.finalP.Add(tempP);
+                            newPartitions.Add(tempP);
                         }                               
                     }
                 }
-                return this.finalP;
+                return newPartitions;
             }
 
             return null;
