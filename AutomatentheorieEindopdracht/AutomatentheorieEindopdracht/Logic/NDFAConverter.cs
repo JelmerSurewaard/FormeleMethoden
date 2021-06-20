@@ -16,6 +16,11 @@ namespace AutomatentheorieEindopdracht.Logic
 
             foreach (var state in ndfa.states)
             {
+                if (state == ndfa.startStates.ElementAt(0))
+                {
+                    newStates.Add(state);
+                }
+               
                 foreach (var symbol in ndfa.alphabet)
                 {
                     var toStates = ndfa.getNextStatesEpsilon(state, symbol);
@@ -29,9 +34,8 @@ namespace AutomatentheorieEindopdracht.Logic
                         newStates.Add(tempString);
                     } else
                     {
-                        newStates.Add("fuik");
+                        newStates.Add("Fuik");
                     }
-                    
                 }
             }
 
@@ -43,20 +47,22 @@ namespace AutomatentheorieEindopdracht.Logic
                 {
                     string tempToState = "";
                     string[] fromStates = state.Split('q');
-                    List<string> fromStatesList = new List<string>();
                     List<string> toStatesList = new List<string>();
                     for (int i = 1; i < fromStates.Length; i++)
                     {
-                        fromStatesList.Add("q" + fromStates[i]);
-                        toStatesList.AddRange(ndfa.getNextStates(fromStatesList, symbol));
-                        fromStatesList.Clear();
+                        toStatesList.AddRange(ndfa.getNextStatesEpsilon("q" + fromStates[i], symbol));
                     }
+
+                    toStatesList = toStatesList.Distinct().ToList();
 
                     foreach (var item in toStatesList)
                     {
                         tempToState += item;
                     }
-                    
+                    if (tempToState == "")
+                    {
+                        tempToState = "Fuik";
+                    }
                     tempDFA.transitions.Add(new Transition<string>(state, symbol, tempToState));
                 }
             }
