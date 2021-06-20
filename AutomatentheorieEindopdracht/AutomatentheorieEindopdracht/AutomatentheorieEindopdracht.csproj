@@ -41,6 +41,9 @@
     <Reference Include="SkiaSharp, Version=2.80.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\SkiaSharp.2.80.2\lib\net462\SkiaSharp.dll</HintPath>
     </Reference>
+    <Reference Include="GraphVizWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphViz.NET.1.0.0\lib\net40\GraphVizWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -90,6 +93,7 @@
     <Compile Include="Logic\Automaton.cs" />
     <Compile Include="Logic\DFA.cs" />
     <Compile Include="Lesson1.cs" />
+    <Compile Include="Logic\Minimalization.cs" />
     <Compile Include="Logic\NDFA.cs" />
     <Compile Include="Logic\NDFAConverter.cs" />
     <Compile Include="Logic\RegEx.cs" />

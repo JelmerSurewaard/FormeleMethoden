@@ -11,7 +11,7 @@ namespace AutomatentheorieEindopdracht
 
         }
 
-        public void lesson1a()
+        public void dfa()
         {
             DFA<string> automaton = new DFA<string>(2);
 
@@ -39,7 +39,7 @@ namespace AutomatentheorieEindopdracht
             Console.WriteLine("End Lesson 1a");
         }
 
-        public void lesson1b()
+        public void ndfa()
         {
             NDFA<string> automaton = new NDFA<string>(2);
 
@@ -76,7 +76,7 @@ namespace AutomatentheorieEindopdracht
             Console.WriteLine("End Lesson 1b");
         }
 
-        public void lesson2a()
+        public void regEx()
         {
             var a = new RegEx("a");
             var b = new RegEx("b");
@@ -112,6 +112,46 @@ namespace AutomatentheorieEindopdracht
 
             //Console.WriteLine("taal van (baa | bb)+:\n" + expr4.languageToString(expr4.getLanguage(5)));
             //Console.WriteLine("taal van (baa | bb)+ (a|b)*:\n" + expr5.languageToString(expr5.getLanguage(6)));
+        }
+
+
+        public void minimalize()
+        {
+            DFA<string> automaton = new DFA<string>(2);
+
+            Minimalization minimalization = new Minimalization();
+
+            automaton.addTransition(new Transition<string>("q0", 'a'));
+            automaton.addTransition(new Transition<string>("q0", 'b', "q1"));
+
+            automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
+            automaton.addTransition(new Transition<string>("q1", 'b'));
+
+            automaton.addTransition(new Transition<string>("q2", 'a', "q0"));
+            automaton.addTransition(new Transition<string>("q2", 'b', "q3"));
+
+            automaton.addTransition(new Transition<string>("q3", 'a', "q4"));
+            automaton.addTransition(new Transition<string>("q3", 'b', "q1"));
+
+            automaton.addTransition(new Transition<string>("q4", 'a', "q5"));
+            automaton.addTransition(new Transition<string>("q4", 'b', "q3"));
+
+            automaton.addTransition(new Transition<string>("q5", 'a', "q0"));
+            automaton.addTransition(new Transition<string>("q5", 'b', "q3"));
+
+
+            automaton.defineAsStartState("q0");
+            automaton.defineAsFinalState("q2");
+            automaton.defineAsFinalState("q4");
+
+
+            automaton.printTransitions();
+
+            Console.WriteLine("minimalization...");
+
+            automaton = minimalization.minimalize(automaton);
+
+            automaton.generateGraph("../Graphs/NormalizeTest.dot");
         }
 
 

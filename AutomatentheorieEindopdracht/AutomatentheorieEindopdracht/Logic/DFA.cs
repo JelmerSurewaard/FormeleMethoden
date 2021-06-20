@@ -104,6 +104,21 @@ namespace AutomatentheorieEindopdracht
             return false;
         }
 
+        public new SortedSet<T> getBetweenStates()
+        {
+            SortedSet<T> between = new SortedSet<T>();
+
+            foreach(T t in this.states)
+            {
+                if ( ! (this.startStates.Contains(t) || this.finalStates.Contains(t)) )
+                {
+                    between.Add(t);
+                }
+            }
+
+            return between;
+        }
+
         public new List<T> getNextStates(List<T> states, char c)
         {
             return base.getNextStates(states, c);

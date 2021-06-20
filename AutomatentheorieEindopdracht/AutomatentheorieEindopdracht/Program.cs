@@ -11,7 +11,7 @@ namespace AutomatentheorieEindopdracht
         static void Main(string[] args)
         {
             Lesson1 lesson1 = new Lesson1();
-            lesson1.lesson1b();
+            lesson1.minimalize();
 
 
             Console.ReadKey();
