@@ -35,8 +35,6 @@ namespace AutomatentheorieEindopdracht
             Console.WriteLine(automaton.accept("bbbb"));
 
             automaton.generateGraph("../Graphs/DFATest.dot");
-            
-            Console.WriteLine("End Lesson 1a");
         }
 
         public void ndfa()
@@ -68,12 +66,41 @@ namespace AutomatentheorieEindopdracht
             Console.WriteLine(automaton.accept("bab"));
 
             automaton.generateGraph("../Graphs/NDFATest.dot");
+        }
+
+        public void ndfaToDfa()
+        {
+            NDFA<string> automaton = new NDFA<string>(2);
+
+            automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
+            automaton.addTransition(new Transition<string>("q1", 'a', "q3"));
+            automaton.addTransition(new Transition<string>("q1", 'b', "q4"));
+
+            automaton.addTransition(new Transition<string>("q2", 'b', "q1"));
+            automaton.addTransition(new Transition<string>("q2", 'a', "q3"));
+            automaton.addTransition(new Transition<string>("q2", "q3"));
+
+            automaton.addTransition(new Transition<string>("q3", 'a', "q3"));
+            automaton.addTransition(new Transition<string>("q3", 'b', "q5"));
+            automaton.addTransition(new Transition<string>("q3", "q4"));
+
+            automaton.addTransition(new Transition<string>("q4", 'a', "q5"));
+
+            automaton.addTransition(new Transition<string>("q5", 'a', "q4"));
+
+
+            automaton.defineAsStartState("q1");
+            automaton.defineAsFinalState("q5");
+
+            automaton.printTransitions();
+
+            Console.WriteLine(automaton.accept("bab"));
+
+            automaton.generateGraph("../Graphs/NDFAPreTest.dot");
 
             DFA<string> automaton2 = NDFAConverter.createDFA(automaton);
 
-            automaton2.generateGraph("../Graphs/DFATest.dot");
-
-            Console.WriteLine("End Lesson 1b");
+            automaton2.generateGraph("../Graphs/DFAPostTest.dot");
         }
 
         public void regEx()
@@ -100,9 +127,8 @@ namespace AutomatentheorieEindopdracht
             //Console.WriteLine("taal van (bb):\n" + expr2.languageToString(expr2.getLanguage(5)));
             //Console.WriteLine("taal van (baa | bb):\n" + expr3.languageToString(expr3.getLanguage(5)));
 
-            Console.WriteLine("Language? van (a|b)*:");
+            Console.WriteLine("Language? van " + all.ToString() + ":");
             all.printLanguage(all.getLanguage(4));
-            Console.WriteLine(all.ToString());
 
             NDFA<string> automaton = RegExConverter.CreateNDFA(all);
 
@@ -112,6 +138,26 @@ namespace AutomatentheorieEindopdracht
 
             //Console.WriteLine("taal van (baa | bb)+:\n" + expr4.languageToString(expr4.getLanguage(5)));
             //Console.WriteLine("taal van (baa | bb)+ (a|b)*:\n" + expr5.languageToString(expr5.getLanguage(6)));
+        }
+
+        public void reGexToDFA()
+        {
+            var a = new RegEx("a");
+            var b = new RegEx("b");
+
+            // all: "(a|b)*"
+            var all = (a.or(b));
+
+            Console.WriteLine("Language? van " + all.ToString() + ":");
+            all.printLanguage(all.getLanguage(4));
+
+            NDFA<string> automaton = RegExConverter.CreateNDFA(all);
+
+            automaton.generateGraph("../Graphs/NDFAFromRegExTest.dot");
+
+            DFA<string> automaton2 = NDFAConverter.createDFA(automaton);
+
+            automaton2.generateGraph("../Graphs/DFAfromNDFAtTest.dot");
         }
 
 

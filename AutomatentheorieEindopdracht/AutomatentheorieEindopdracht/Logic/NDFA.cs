@@ -85,20 +85,6 @@ namespace AutomatentheorieEindopdracht
         {
             List<T> nextStates = new List<T>();
 
-            /*foreach (Transition<T> transition in transitions)
-            {
-                if (transition.fromState.Equals(state) && transition.symbol == c)
-                {
-                    nextStates.Add(transition.toState);
-                    nextStates.AddRange(getNextStatesEpsilon(transition.toState.ToString(), Transition<T>.EPSILON));
-                }
-                else
-                if (transition.fromState.Equals(state) && transition.symbol == Transition<T>.EPSILON)
-                {
-                    nextStates.AddRange(getNextStatesEpsilon(transition.toState.ToString(), transition.symbol));
-                }
-            }*/
-
             foreach (Transition<T> transition in transitions)
             {
                 if (transition.fromState.Equals(state))

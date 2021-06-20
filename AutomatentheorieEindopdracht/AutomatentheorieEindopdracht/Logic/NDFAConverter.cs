@@ -71,7 +71,7 @@ namespace AutomatentheorieEindopdracht.Logic
             tempDFA.startStates = ndfa.startStates;
             foreach (var state in newStates)
             {
-                if (state.Contains(ndfa.finalStates.ToString()))
+                if (state.Contains(ndfa.finalStates.ElementAt(0).ToString()))
                 {
                     tempDFA.finalStates.Add(state);
                 }

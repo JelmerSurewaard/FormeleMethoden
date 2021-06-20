@@ -11,7 +11,7 @@ namespace AutomatentheorieEindopdracht
         static void Main(string[] args)
         {
             Lesson1 lesson1 = new Lesson1();
-            lesson1.minimalize();
+            lesson1.reGexToDFA();
 
 
             Console.ReadKey();
