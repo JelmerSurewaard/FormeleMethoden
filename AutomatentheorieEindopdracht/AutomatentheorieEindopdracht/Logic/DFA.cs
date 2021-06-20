@@ -6,12 +6,12 @@ namespace AutomatentheorieEindopdracht
 {
     class DFA<T> : Automaton<T> where T : IComparable
     {
-        private HashSet<Transition<T>> transitions;
+        public HashSet<Transition<T>> transitions;
 
-        private SortedSet<T> states;
-        private SortedSet<T> startStates;
-        private SortedSet<T> finalStates;
-        private SortedSet<char> alphabet;
+        public SortedSet<T> states;
+        public SortedSet<T> startStates;
+        public SortedSet<T> finalStates;
+        public SortedSet<char> alphabet;
 
         public DFA(int n) : base(n)
         {

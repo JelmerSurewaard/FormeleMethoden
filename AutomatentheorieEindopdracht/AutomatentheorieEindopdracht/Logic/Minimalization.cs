@@ -196,6 +196,25 @@ namespace AutomatentheorieEindopdracht.Logic
                 this.partitionName.AddRange(temp);
             }
         }
+
+        public NDFA<string> reverseAutomaton(Automaton<string> automaton)
+        {
+            NDFA<string> tempNDFA = new NDFA<string>(automaton.alphabet.Count);
+
+            tempNDFA.finalStates = automaton.startStates;
+            tempNDFA.startStates = automaton.finalStates;
+            tempNDFA.states = automaton.states;
+
+            var transList = new HashSet<Transition<string>>();
+
+            foreach (var trans in automaton.transitions)
+            {
+                transList.Add(new Transition<string>(trans.toState, trans.symbol, trans.fromState));
+            }
+
+            tempNDFA.transitions = transList;
+            return tempNDFA;
+        }
     }
 
     class Partition

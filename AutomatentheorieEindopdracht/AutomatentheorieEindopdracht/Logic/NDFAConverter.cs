@@ -8,7 +8,12 @@ namespace AutomatentheorieEindopdracht.Logic
 {
     class NDFAConverter
     {
-        public static DFA<string> createDFA(NDFA<string> ndfa)
+        public NDFAConverter()
+        {
+
+        }
+
+        public DFA<string> createDFA(NDFA<string> ndfa)
         {
             DFA<string> tempDFA = new DFA<string>(ndfa.alphabet.Count);
 
@@ -77,7 +82,8 @@ namespace AutomatentheorieEindopdracht.Logic
             }
 
             tempDFA.states = newStates;
-            tempDFA.startStates = ndfa.startStates;
+
+            tempDFA.startStates.Add(ndfa.startStates.First());
 
             //add Finalstates to new DFA
 
@@ -100,7 +106,7 @@ namespace AutomatentheorieEindopdracht.Logic
             int fuikExists = 0;
             foreach (var trans in tempDFA.transitions)
             {
-                if (trans.toState.Equals("Fuik"))
+                if (trans.toState.Equals("Fuik") && trans.fromState.Equals("Fuik"))
                 {
                     fuikExists++;
                 }
