@@ -130,14 +130,14 @@ namespace AutomatentheorieEindopdracht
             //Console.WriteLine("taal van (bb):\n" + expr2.languageToString(expr2.getLanguage(5)));
             //Console.WriteLine("taal van (baa | bb):\n" + expr3.languageToString(expr3.getLanguage(5)));
 
-            Console.WriteLine("Language? van " + all.ToString() + ":");
-            all.printLanguage(all.getLanguage(4));
+            Console.WriteLine("Language? van " + expr5.ToString() + ":");
+            expr5.printLanguage(expr5.getLanguage(4));
 
-            NDFA<string> automaton = RegExConverter.CreateNDFA(all);
+            //NDFA<string> automaton = RegExConverter.CreateNDFA(all);
 
-            automaton.printTransitions();
+            //automaton.printTransitions();
 
-            automaton.generateGraph("../Graphs/NDFAFromRegExTest.dot");
+            //automaton.generateGraph("../Graphs/NDFAFromRegExTest.dot");
 
             //Console.WriteLine("taal van (baa | bb)+:\n" + expr4.languageToString(expr4.getLanguage(5)));
             //Console.WriteLine("taal van (baa | bb)+ (a|b)*:\n" + expr5.languageToString(expr5.getLanguage(6)));
@@ -165,10 +165,10 @@ namespace AutomatentheorieEindopdracht
 
             NDFAConverter nDFAConverter = new NDFAConverter();
 
-            Console.WriteLine("Language? van " + expr4.ToString() + ":");
-            expr4.printLanguage(expr4.getLanguage(4));
+            Console.WriteLine("Language? van " + all.ToString() + ":");
+            all.printLanguage(all.getLanguage(4));
 
-            NDFA<string> automaton = RegExConverter.CreateNDFA(expr4);
+            NDFA<string> automaton = RegExConverter.CreateNDFA(all);
 
             automaton.generateGraph("../Graphs/NDFAFromRegExTest.dot");
 

@@ -9,10 +9,10 @@ namespace AutomatentheorieEindopdracht.Logic
 
     class Minimalization
     {
-        private List<char> partitionName;
-        private DFA<string> dfa;
-        private bool lastItiration = true;
-        private List<Partition> finalP = new List<Partition>();
+        public List<char> partitionName;
+        public DFA<string> dfa;
+        public bool lastItiration = true;
+        public List<Partition> finalP = new List<Partition>();
 
         public Minimalization()
         {
@@ -55,21 +55,6 @@ namespace AutomatentheorieEindopdracht.Logic
             }
             return automaton;
         }
-
-        //private Dictionary<string, char> rowsToDict(List<Partition> partitions)
-        //{
-        //    Dictionary<string, char> keyvalue = new Dictionary<string, char>();
-
-        //    foreach(var p in partitions)
-        //    {
-        //        for(int i = 0; i < p.States.Count(); i ++)
-        //        {
-        //            keyvalue.Add(p.States.ElementAt(i), p.PartitionName);
-        //        }
-        //    }
-
-        //    return keyvalue;
-        //}
 
         private List<Partition> partitionize(List<Partition> allPartitions)
         {
