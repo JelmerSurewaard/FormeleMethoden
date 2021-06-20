@@ -118,29 +118,64 @@ namespace AutomatentheorieEindopdracht
 
             Minimalization minimalization = new Minimalization();
 
-            automaton.addTransition(new Transition<string>("q0", 'a'));
-            automaton.addTransition(new Transition<string>("q0", 'b', "q1"));
+            //automaton.addTransition(new Transition<string>("q0", 'a'));
+            //automaton.addTransition(new Transition<string>("q0", 'b', "q1"));
 
-            automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
-            automaton.addTransition(new Transition<string>("q1", 'b'));
+            //automaton.addTransition(new Transition<string>("q1", 'a', "q2"));
+            //automaton.addTransition(new Transition<string>("q1", 'b'));
 
-            automaton.addTransition(new Transition<string>("q2", 'a', "q0"));
-            automaton.addTransition(new Transition<string>("q2", 'b', "q3"));
+            //automaton.addTransition(new Transition<string>("q2", 'a', "q0"));
+            //automaton.addTransition(new Transition<string>("q2", 'b', "q3"));
 
-            automaton.addTransition(new Transition<string>("q3", 'a', "q4"));
-            automaton.addTransition(new Transition<string>("q3", 'b', "q1"));
+            //automaton.addTransition(new Transition<string>("q3", 'a', "q4"));
+            //automaton.addTransition(new Transition<string>("q3", 'b', "q1"));
 
-            automaton.addTransition(new Transition<string>("q4", 'a', "q5"));
-            automaton.addTransition(new Transition<string>("q4", 'b', "q3"));
+            //automaton.addTransition(new Transition<string>("q4", 'a', "q5"));
+            //automaton.addTransition(new Transition<string>("q4", 'b', "q3"));
 
-            automaton.addTransition(new Transition<string>("q5", 'a', "q0"));
-            automaton.addTransition(new Transition<string>("q5", 'b', "q3"));
+            //automaton.addTransition(new Transition<string>("q5", 'a', "q0"));
+            //automaton.addTransition(new Transition<string>("q5", 'b', "q3"));
 
 
-            automaton.defineAsStartState("q0");
-            automaton.defineAsFinalState("q2");
-            automaton.defineAsFinalState("q4");
+            //automaton.defineAsStartState("q0");
+            //automaton.defineAsFinalState("q2");
+            //automaton.defineAsFinalState("q4");
 
+            automaton.addTransition(new Transition<string>("1", 'a', "2"));
+            automaton.addTransition(new Transition<string>("1", 'b', "3"));
+
+            automaton.addTransition(new Transition<string>("2", 'a', "6"));
+            automaton.addTransition(new Transition<string>("2", 'b', "2"));
+
+            automaton.addTransition(new Transition<string>("3", 'a', "4"));
+            automaton.addTransition(new Transition<string>("3", 'b', "5"));
+
+            automaton.addTransition(new Transition<string>("4", 'a', "2"));
+            automaton.addTransition(new Transition<string>("4", 'b', "3"));
+
+            automaton.addTransition(new Transition<string>("5", 'a', "8"));
+            automaton.addTransition(new Transition<string>("5", 'b', "7"));
+
+            automaton.addTransition(new Transition<string>("6", 'a', "7"));
+            automaton.addTransition(new Transition<string>("6", 'b', "5"));
+
+            automaton.addTransition(new Transition<string>("7", 'a', "5"));
+            automaton.addTransition(new Transition<string>("7", 'b', "8"));
+
+            automaton.addTransition(new Transition<string>("8", 'a', "9"));
+            automaton.addTransition(new Transition<string>("8", 'b', "10"));
+
+            automaton.addTransition(new Transition<string>("9", 'a', "9"));
+            automaton.addTransition(new Transition<string>("9", 'b', "10"));
+
+            automaton.addTransition(new Transition<string>("10", 'a', "10"));
+            automaton.addTransition(new Transition<string>("10", 'b', "10"));
+
+            automaton.defineAsStartState("1");
+
+            automaton.defineAsFinalState("6");
+            automaton.defineAsFinalState("8");
+            automaton.defineAsFinalState("9");
 
             automaton.printTransitions();
 

@@ -12,6 +12,7 @@ namespace AutomatentheorieEindopdracht.Logic
         private List<char> partitionName;
         private DFA<string> dfa;
         private bool lastItiration = true;
+        private List<Partition> finalP = new List<Partition>();
 
         public Minimalization()
         {
@@ -27,11 +28,13 @@ namespace AutomatentheorieEindopdracht.Logic
 
             while ( AB != null )
             {
-                FinalTable = AB;
+                FinalTable = fixStates(AB);
+
+                printTable(FinalTable);
                 AB = partitionize(AB);
 
             }
-            
+
             return convertToDFA(FinalTable);
         }
 
@@ -39,27 +42,40 @@ namespace AutomatentheorieEindopdracht.Logic
         {
             DFA<string> automaton = new DFA<string>(2);
 
-            foreach(Partition p in final)
+            foreach (Partition p in final)
             {
-                automaton.addTransition(new Transition<string>(p.PartitionName.ToString(),'a', p.States.ElementAt(0)));
-                automaton.addTransition(new Transition<string>(p.PartitionName.ToString(),'b', p.States.ElementAt(1)));
+                automaton.addTransition(new Transition<string>(p.PartitionName.ToString(), 'a', p.ab[0].ToString()));
+                automaton.addTransition(new Transition<string>(p.PartitionName.ToString(), 'b', p.ab[1].ToString()));
 
-                if (this.dfa.finalStates.Contains(p.States.ElementAt(0))) { automaton.defineAsFinalState(p.States.ElementAt(0)); }
-                if (this.dfa.finalStates.Contains(p.States.ElementAt(1))) { automaton.defineAsFinalState(p.States.ElementAt(1)); }
-
-                if (this.dfa.startStates.Contains(p.States.ElementAt(0))) { automaton.defineAsStartState(p.States.ElementAt(0)); }
-                if (this.dfa.startStates.Contains(p.States.ElementAt(1))) { automaton.defineAsStartState(p.States.ElementAt(1)); }
-
+                foreach (var state in p.States)
+                {             
+                    if (this.dfa.finalStates.Contains(state)) { automaton.defineAsFinalState(p.PartitionName.ToString()); }
+                    if (this.dfa.startStates.Contains(state)) { automaton.defineAsStartState(p.PartitionName.ToString()); }
+                }
             }
-
             return automaton;
         }
 
+        //private Dictionary<string, char> rowsToDict(List<Partition> partitions)
+        //{
+        //    Dictionary<string, char> keyvalue = new Dictionary<string, char>();
+
+        //    foreach(var p in partitions)
+        //    {
+        //        for(int i = 0; i < p.States.Count(); i ++)
+        //        {
+        //            keyvalue.Add(p.States.ElementAt(i), p.PartitionName);
+        //        }
+        //    }
+
+        //    return keyvalue;
+        //}
+
         private List<Partition> partitionize(List<Partition> allPartitions)
         {
-            List<Partition> newPartitions = new List<Partition>();
+            this.finalP = new List<Partition>() ;
             
-            if ( this.lastItiration ) 
+            if ( this.lastItiration )
             {
                 foreach (Partition p in allPartitions)
                 {
@@ -83,15 +99,15 @@ namespace AutomatentheorieEindopdracht.Logic
                     bool temp_bool = true;
                     foreach (char[] value in rows.Values)
                     {
-                        if ( ! (test_val == value) )
+                        if (! compareArrays(value, test_val))
                         {
                             temp_bool = false;
-                            this.lastItiration = false; 
+                            this.lastItiration = false;
                         }
                     }
                     if (temp_bool) 
                     {
-                        newPartitions.Add(p);
+                        this.finalP.Add(p);
                     }
                     else
                     {
@@ -99,7 +115,7 @@ namespace AutomatentheorieEindopdracht.Logic
                         {
                             Partition tempP = new Partition();
                             
-                                char[] transition = rows.ElementAt(0).Value; //A, A
+                                char[] transition = rows.ElementAt(0).Value;
                                 tempP.ab = transition;
 
                                 foreach(var row in rows)
@@ -117,32 +133,50 @@ namespace AutomatentheorieEindopdracht.Logic
 
                             tempP.PartitionName = this.partitionName[0];
                             popStateNames();
-                            newPartitions.Add(tempP);
+                            this.finalP.Add(tempP);
                         }                               
                     }
                 }
-                return newPartitions;
+                return this.finalP;
             }
 
             return null;
 
         }
 
+        private List<Partition> fixStates(List<Partition> final)
+        {
+            List<Partition> newFinal = new List<Partition>();
+
+            foreach(var partition in final)
+            {
+                partition.ab[0] = getToPartition(this.dfa.GetToStates(partition.States.ElementAt(0), 'a').ElementAt(0), final);
+                partition.ab[1] = getToPartition(this.dfa.GetToStates(partition.States.ElementAt(0), 'b').ElementAt(0), final);
+                newFinal.Add(partition);
+            }
+
+
+            return newFinal;
+        }
+
+        private void printTable(List<Partition> partitions)
+        {
+            Console.WriteLine("Toestand\ta\tb");
+            foreach(var p in partitions)
+            {
+                if (p.ab != null)
+                {
+                    foreach (var state in p.States)
+                    {
+                        Console.WriteLine(p.PartitionName + "|\t" + state + "   " + p.ab[0] + "|\t" + "   " + p.ab[1]);
+                    }
+                }
+            }
+        }
+
         private bool compareArrays(char[] a, char[] b)
         {
             if ( a[0] == b[0] && a[1] == b[1]) { return true; } else { return false; }
-        }
-
-        private SortedSet<string> convertListToSS(List<string> list)
-        {
-            SortedSet<string> temp = new SortedSet<string>();
-
-            foreach(string s in list)
-            {
-                temp.Add(s);
-            }
-
-            return temp;
         }
 
         private char getToPartition(string state, List<Partition> partitions)
@@ -151,7 +185,10 @@ namespace AutomatentheorieEindopdracht.Logic
 
             foreach(Partition p in partitions)
             {
-                ToPartition = p.States.Contains(state) ? p.PartitionName : '0';
+                if (p.States.Contains(state))
+                {
+                    return p.PartitionName;
+                }
             }
 
             return ToPartition;
@@ -198,20 +235,22 @@ namespace AutomatentheorieEindopdracht.Logic
         }
     }
 
-    class Partition
+     class Partition
         {
             public char PartitionName { get; set; }
             public SortedSet<string> States { get; set; }
-
             public char[] ab { get; set; }
 
             public Partition() {
-            this.States = new SortedSet<string>();
+                this.States = new SortedSet<string>();
+                this.ab = new char[2] { '0', '0'};
         }
             public Partition(char PartitionName, SortedSet<string> states)
                 {
                     this.PartitionName = PartitionName;
                     this.States = states;
-                 }
+                    this.ab = new char[2] { '0', '0' };
+
         }
+    }
 }
